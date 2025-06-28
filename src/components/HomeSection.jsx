@@ -1,6 +1,8 @@
 import React from 'react';
 import { Typewriter } from 'react-simple-typewriter';
 import './styles/HomeSection.css';
+import avatar from '../assets/Github-pic.jpg';
+
 
 const HomeSection = ({
   name = "Muhammad Ali Abid",
@@ -40,7 +42,6 @@ const HomeSection = ({
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start home-section__cta">
-            <button>
             <a
               href={ctaLink}
               className="group inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-cyan-500 to-cyan-400 text-gray-900 font-semibold rounded-lg hover:from-cyan-400 hover:to-cyan-300 transition-all duration-300 transform hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/25 home-section__cta-main"
@@ -62,7 +63,7 @@ const HomeSection = ({
             >
               Get In Touch
             </a>
-            </button>
+
           </div>
 
           {/* Social Links */}
@@ -108,7 +109,7 @@ const HomeSection = ({
           <div className="relative home-section__avatar-wrapper">
             {avatarUrl ? (
               <img
-                src={avatarUrl}
+                src={avatarUrl || avatar}
                 alt={name}
                 className="w-80 h-80 lg:w-96 lg:h-96 rounded-full object-cover border-4 border-cyan-500/20 shadow-2xl transform hover:scale-105 transition-transform duration-300 home-section__avatar"
               />
