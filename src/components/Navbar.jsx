@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-scroll';
 import GithubLogo from '../assets/Github-Logo.jpeg';
-import GooeyNav from './GooeyNav';
 import './styles/Navbar.css'; // Ensure you have the correct path to your CSS
 
 export default function Navbar() {

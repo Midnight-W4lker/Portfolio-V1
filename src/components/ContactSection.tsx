@@ -17,16 +17,16 @@ interface GlobeRefs {
 const ContactSection = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const mountRef = useRef(null);
-  const sceneRef = useRef(null);
-  const rendererRef = useRef(null);
-  const globeRef = useRef(null);
+  const mountRef = useRef<HTMLDivElement | null>(null);
+  const sceneRef = useRef<THREE.Scene | null>(null);
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const globeRef = useRef<GlobeRefs | null>(null);
   
   // Form refs with proper typing
-  const nameRef = useRef(null);
-  const emailRef = useRef(null);
-  const subjectRef = useRef(null);
-  const messageRef = useRef(null);
+  const nameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const subjectRef = useRef<HTMLInputElement>(null);
+  const messageRef = useRef<HTMLTextAreaElement>(null);
 
   const socialLinks: SocialLink[] = [
     { 
@@ -41,7 +41,7 @@ const ContactSection = () => {
     },
     { 
       name: 'Kaggle', 
-      url: 'https://kaggle.com/yourprofile', 
+      url: 'https://kaggle.com/midnightw4lker', 
       icon: <ExternalLink className="w-5 h-5" />,
     }
   ];
@@ -53,76 +53,136 @@ const ContactSection = () => {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    
-    renderer.setSize(400, 400);
+
+    // Make the canvas bigger
+    renderer.setSize(520, 520);
     renderer.setClearColor(0x000000, 0);
     mountRef.current.appendChild(renderer.domElement);
 
-    // Create Globe
-    const geometry = new THREE.SphereGeometry(1.2, 64, 64);
-    const material = new THREE.MeshPhongMaterial({
-      color: 0x00ffff,
+    // Bigger, glassy globe
+    const globeGeometry = new THREE.SphereGeometry(1.8, 64, 64);
+    const globeMaterial = new THREE.MeshPhysicalMaterial({
+      color: 0x22e6ff,
+      metalness: 0.7,
+      roughness: 0.15,
+      transmission: 0.85,
+      thickness: 0.7,
+      clearcoat: 1,
+      clearcoatRoughness: 0.1,
+      iridescence: 0.5,
+      iridescenceIOR: 1.3,
+      iridescenceThicknessRange: [100, 400],
+      sheen: 0.5,
+      sheenColor: new THREE.Color(0x7fffd4),
+      emissive: new THREE.Color(0x1de9b6),
+      emissiveIntensity: 0.18,
       transparent: true,
-      opacity: 0.8,
-      wireframe: true
+      opacity: 0.92,
     });
-    const globe = new THREE.Mesh(geometry, material);
+    const globe = new THREE.Mesh(globeGeometry, globeMaterial);
     scene.add(globe);
 
-    // Add particles around globe
-    const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 1000;
-    const posArray = new Float32Array(particlesCount * 3);
-
-    for (let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 8;
-    }
-
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.005,
-      color: 0x00ffff,
+    // Bigger orbiting ring 1 (cyan)
+    const ring1Geometry = new THREE.TorusGeometry(2.6, 0.045, 24, 120);
+    const ring1Material = new THREE.MeshBasicMaterial({
+      color: 0x06b6d4,
       transparent: true,
-      opacity: 0.8
+      opacity: 0.45,
     });
+    const ring1 = new THREE.Mesh(ring1Geometry, ring1Material);
+    ring1.rotation.x = Math.PI / 2.5;
+    scene.add(ring1);
 
-    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-    scene.add(particlesMesh);
+    // Bigger orbiting ring 2 (blue, tilted)
+    const ring2Geometry = new THREE.TorusGeometry(3.1, 0.032, 24, 120);
+    const ring2Material = new THREE.MeshBasicMaterial({
+      color: 0x3b82f6,
+      transparent: true,
+      opacity: 0.32,
+    });
+    const ring2 = new THREE.Mesh(ring2Geometry, ring2Material);
+    ring2.rotation.x = Math.PI / 3.5;
+    ring2.rotation.z = Math.PI / 4;
+    scene.add(ring2);
+
+    // Space-like particles
+    const particleCount = 350;
+    const particleGeometry = new THREE.BufferGeometry();
+    const positions: number[] = [];
+    const colors: number[] = [];
+    for (let i = 0; i < particleCount; i++) {
+      // Random position in a shell around the globe
+      const phi = Math.acos(2 * Math.random() - 1);
+      const theta = 2 * Math.PI * Math.random();
+      const r = 3.6 + Math.random() * 1.5;
+      positions.push(
+        r * Math.sin(phi) * Math.cos(theta),
+        r * Math.sin(phi) * Math.sin(theta),
+        r * Math.cos(phi)
+      );
+      // Cyan/blue/white color
+      const color = new THREE.Color().setHSL(0.5 + 0.2 * Math.random(), 0.7, 0.7 + 0.2 * Math.random());
+      colors.push(color.r, color.g, color.b);
+    }
+    particleGeometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    particleGeometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+    const particleMaterial = new THREE.PointsMaterial({
+      size: 0.06,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.7,
+      blending: THREE.AdditiveBlending,
+    });
+    const particles = new THREE.Points(particleGeometry, particleMaterial);
+    scene.add(particles);
+
+    // Soft glow (optional)
+    const glowGeometry = new THREE.SphereGeometry(2.0, 32, 32);
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: 0x22e6ff,
+      transparent: true,
+      opacity: 0.08,
+    });
+    const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+    scene.add(glow);
 
     // Lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+    const ambientLight = new THREE.AmbientLight(0x00bcd4, 0.5);
     scene.add(ambientLight);
-    
-    const pointLight = new THREE.PointLight(0x00ffff, 1, 100);
+    const pointLight = new THREE.PointLight(0x00ffff, 1.2, 100);
     pointLight.position.set(10, 10, 10);
     scene.add(pointLight);
 
-    camera.position.z = 3;
+    camera.position.z = 5;
 
-    // Store refs
-    sceneRef.current = scene;
-    rendererRef.current = renderer;
-    globeRef.current = { globe, particles: particlesMesh };
+    // Animate globe color for a subtle aurora effect
+    let hue = 0.5;
+    function animateGlobeColor() {
+      hue += 0.0008;
+      if (hue > 0.7) hue = 0.5;
+      const color = new THREE.Color().setHSL(hue, 0.7, 0.55);
+      globeMaterial.color.copy(color);
+      globeMaterial.sheenColor.copy(color.clone().lerp(new THREE.Color(0xffffff), 0.5));
+      globeMaterial.emissive.copy(color.clone().lerp(new THREE.Color(0x1de9b6), 0.6));
+    }
 
     // Animation loop
     const animate = (): void => {
       requestAnimationFrame(animate);
-      
-      if (globeRef.current) {
-        globeRef.current.globe.rotation.y += 0.005;
-        globeRef.current.particles.rotation.y += 0.001;
-        globeRef.current.particles.rotation.x += 0.001;
-      }
-      
+      globe.rotation.y += 0.005;
+      ring1.rotation.y += 0.019;
+      ring2.rotation.y += 0.009;
+      particles.rotation.y += 0.002;
+      animateGlobeColor();
       renderer.render(scene, camera);
     };
     animate();
 
     // Handle resize
     const handleResize = (): void => {
-      if (mountRef.current && rendererRef.current) {
-        const size = Math.min(mountRef.current.clientWidth, 400);
-        rendererRef.current.setSize(size, size);
+      if (mountRef.current && renderer) {
+        const size = Math.min(mountRef.current.clientWidth, 520);
+        renderer.setSize(size, size);
       }
     };
 
@@ -191,7 +251,7 @@ const ContactSection = () => {
   return (
     <div className="contact-section">      
       {/* Left Half - Contact Form */}
-      <div className="contact-form-section">
+      <div className="contact-form-section ">  {/*w-full lg:w-1/2 */}
         {/* Background Effects for Left Side */}
         <div className="background-effects">
           <div className="bg-gradient-1"></div>
@@ -351,16 +411,16 @@ const ContactSection = () => {
         </div>
       </div>
 
-      {/* Right Half - Animated Globe */}
+      {/* Right Half - Animated Globe*/}
       <div className="globe-section">
-        {/* Background Effects for Right Side */}
+        {/* Background Effects for Right Side  */}
         <div className="globe-background">
           <div className="globe-gradient-1"></div>
           <div className="globe-gradient-2"></div>
         </div>
 
         {/* Globe Container */}
-        <div className="globe-container">
+        <div className="globe-container flex items-center justify-center w-[520px] h-[520px] mx-auto relative">
           <div className="globe-header">
             <h3 className="globe-title">
               Connect <span className="globe-accent">Globally</span>
@@ -370,7 +430,7 @@ const ContactSection = () => {
             </p>
           </div>
           
-          <div ref={mountRef} className="globe-mount" />
+          <div ref={mountRef} className="globe-mount w-full h-full" />
         </div>
       </div>
     </div>

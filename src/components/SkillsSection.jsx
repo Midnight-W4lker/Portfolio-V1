@@ -9,11 +9,11 @@ const SkillsSection = ({
       icon: '📊',
       skills: [
         { name: 'Python', level: 95, description: 'Advanced proficiency in data analysis and machine learning' },
-        { name: 'Machine Learning', level: 90, description: 'Scikit-learn, TensorFlow, PyTorch' },
+        { name: 'Machine Learning', level: 90, description: 'Scikit-learn, Time Series, ARIMA' },
         { name: 'Data Visualization', level: 88, description: 'Matplotlib, Seaborn, Plotly, Tableau' },
         { name: 'SQL', level: 85, description: 'PostgreSQL, MySQL, complex queries and optimization' },
-        { name: 'Statistics', level: 82, description: 'Statistical analysis, hypothesis testing, A/B testing' },
-        { name: 'Big Data', level: 78, description: 'Apache Spark, Hadoop, distributed computing' }
+        { name: 'Statistics', level: 88, description: 'Statistical analysis, hypothesis testing, A/B testing' },
+        { name: 'Data Analysis', level: 88, description: 'Exploratory, Regression, ANOVA' }
       ]
     },
     {
@@ -21,12 +21,12 @@ const SkillsSection = ({
       name: 'Web Development',
       icon: '💻',
       skills: [
-        { name: 'React', level: 92, description: 'Advanced React development with hooks and modern patterns' },
+        { name: 'React', level: 80, description: 'Advanced React development with hooks and modern patterns' },
         { name: 'JavaScript', level: 90, description: 'ES6+, async programming, DOM manipulation' },
-        { name: 'Node.js', level: 85, description: 'Express.js, API development, microservices' },
-        { name: 'CSS/Tailwind', level: 88, description: 'Responsive design, modern CSS, Tailwind CSS' },
-        { name: 'TypeScript', level: 80, description: 'Type-safe development, interfaces, generics' },
-        { name: 'Next.js', level: 78, description: 'Full-stack React framework, SSR, API routes' }
+        { name: 'Node.js', level: 80, description: 'Express.js, API development, microservices' },
+        { name: 'CSS/Tailwind', level: 78, description: 'Responsive design, modern CSS, Tailwind CSS' },
+        { name: 'TypeScript', level: 78, description: 'Type-safe development, interfaces, generics' },
+        { name: 'Next.js', level: 82, description: 'Full-stack React framework, SSR, API routes' }
       ]
     },
     {
@@ -35,9 +35,9 @@ const SkillsSection = ({
       icon: '🛠️',
       skills: [
         { name: 'Git', level: 90, description: 'Version control, branching strategies, collaboration' },
-        { name: 'Docker', level: 85, description: 'Containerization, Docker Compose, deployment' },
-        { name: 'AWS', level: 82, description: 'EC2, S3, Lambda, RDS, cloud architecture' },
-        { name: 'MongoDB', level: 80, description: 'NoSQL database design, aggregation, indexing' },
+        { name: 'Adobe Creative Cloud', level: 90, description: 'Illustrator, Photoshop, Premier Cut' },
+        { name: 'Notion', level: 88, description: 'Note keeping, Hierarchy Relationships, Forms and Table Design' },
+        { name: 'Oracle', level: 85, description: 'SQL database design, aggregation, indexing' },
         { name: 'Linux', level: 78, description: 'Command line, shell scripting, server administration' },
         { name: 'CI/CD', level: 75, description: 'GitHub Actions, automated testing and deployment' }
       ]
@@ -160,7 +160,7 @@ const SkillsSection = ({
           </div>
           
           <div className="text-center p-6 bg-gray-800/30 rounded-xl border border-gray-700/50">
-            <div className="text-3xl font-bold text-cyan-400 mb-2">5+</div>
+            <div className="text-3xl font-bold text-cyan-400 mb-2">3+</div>
             <div className="text-gray-300 font-medium">Years Experience</div>
             <div className="text-gray-500 text-sm mt-1">In software development</div>
           </div>
