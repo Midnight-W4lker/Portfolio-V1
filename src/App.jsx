@@ -6,15 +6,11 @@ import SkillsSection from './components/SkillsSection';
 import HomeSection from './components/HomeSection';
 import ContactSection from './components/ContactSection';
 import SplashCursor from './components/SplashCursor/SplashCursor';
-// import SplashCursor from './components/SplashCursor';
-
 import './index.css';
-
-// Only import Router if you plan to use routing
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+// Only import Router if you plan to use routing
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   // Initialize AOS animations
@@ -29,8 +25,6 @@ function App() {
 
   return (
     <div className="relative min-h-screen">
-      {/* Custom cursor */}
-      {/* <SplashCursor /> */}
       <SplashCursor />
 
       {/* Background gradient */}
