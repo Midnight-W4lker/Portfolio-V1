@@ -31,7 +31,7 @@ const ContactSection = () => {
   const socialLinks: SocialLink[] = [
     { 
       name: 'LinkedIn', 
-      url: 'https://linkedin.com/in/yourprofile', 
+      url: 'https://linkedin.com/in/muhammad-ali-abid-mw', 
       icon: <Linkedin className="w-5 h-5" />,
     },
     { 

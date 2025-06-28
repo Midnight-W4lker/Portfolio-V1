@@ -3,6 +3,10 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-scroll';
 import GithubLogo from '../assets/Github-Logo.jpeg';
 import './styles/Navbar.css'; // Ensure you have the correct path to your CSS
+import HomeSection from './HomeSection';
+import ProjectSection from './ProjectsSection';
+import SkillsSection from './SkillsSection';
+import ContactSection from './ContactSection';
 
 export default function Navbar() {
   const [isClosed, setIsClosed] = useState(true);
@@ -132,7 +136,21 @@ export default function Navbar() {
   </AnimatePresence>
 </nav>
 
+<section id="home">
+  <HomeSection />
+</section>
 
+<section id="projects">
+  <ProjectSection />
+</section>
+
+<section id="skills">
+  <SkillsSection />
+</section>
+
+<section id="contact">
+  <ContactSection />
+</section>
     </>
   );
 }
