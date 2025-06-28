@@ -5,7 +5,8 @@ import ProjectsSection from './components/ProjectsSection';
 import SkillsSection from './components/SkillsSection';
 import HomeSection from './components/HomeSection';
 import ContactSection from './components/ContactSection';
-import SplashCursor from './components/SplashCursor';
+import SplashCursor from './components/SplashCursor/SplashCursor';
+// import SplashCursor from './components/SplashCursor';
 
 import './index.css';
 
@@ -29,7 +30,11 @@ function App() {
   return (
     <div className="relative min-h-screen">
       {/* Custom cursor */}
+      {/* <SplashCursor /> */}
       <SplashCursor />
+
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-900 to-cyan-800 via-cyan-700 z-0"></div>
 
       {/* Main content */}
       <div className="relative z-10">
