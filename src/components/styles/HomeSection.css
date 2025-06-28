@@ -1,0 +1,29 @@
+.home-section { }
+.home-section__container { }
+.home-section__content { }
+
+.home-section__heading{ }
+.home-section__name { }
+.home-section__title { }
+.home-section__description { }
+.home-section__cta { }
+.home-section__cta-main { }
+.home-section__cta-secondary { }
+.home-section__socials { }
+.home-section__social-link { }
+.home-section__avatar-container { }
+.home-section__avatar-wrapper { }
+.home-section__avatar { 
+        color: #FFD700;
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            -o-transform: scale(1.1);
+            transform: scale(1.1);
+}
+.home-section__avatar-placeholder { }
+.home-section__avatar-deco1 { }
+.home-section__avatar-deco2 { }
+.home-section__scroll-indicator { }
+.home-section__scroll-indicator-outer { }
+.home-section__scroll-indicator-inner { }
