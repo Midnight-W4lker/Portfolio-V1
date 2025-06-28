@@ -10,7 +10,7 @@ const HomeSection = ({
   description = "Passionate about creating innovative solutions through code and data analysis. I build modern web applications and extract insights from complex datasets.",
   ctaText = "View My Work",
   ctaLink = "#projects",
-  avatarUrl = "./src/assets/Github-pic.jpg"
+  // avatarUrl = "./src/assets/Github-pic.jpg"
 }) => {
   return (
     <section className="min-h-screen bg-gray-900 flex items-center justify-center px-4 py-20 home-section">
@@ -107,9 +107,9 @@ const HomeSection = ({
         {/* Avatar/Image Side */}
         <div className="flex justify-center lg:justify-end home-section__avatar-container">
           <div className="relative home-section__avatar-wrapper">
-            {avatarUrl ? (
+            {avatar ? (
               <img
-                src={avatarUrl || avatar}
+                src={avatar}
                 alt={name}
                 className="w-80 h-80 lg:w-96 lg:h-96 rounded-full object-cover border-4 border-cyan-500/20 shadow-2xl transform hover:scale-105 transition-transform duration-300 home-section__avatar"
               />
