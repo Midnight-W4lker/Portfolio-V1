@@ -26,17 +26,21 @@ function App() {
   return (
     <div className="relative min-h-screen">
       <SplashCursor />
-
-      {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-r from-cyan-900 to-cyan-800 via-cyan-700 z-0"></div>
-
-      {/* Main content */}
       <div className="relative z-10">
         <Navbar />
-        <HomeSection />
-        <ProjectsSection />
-        <SkillsSection />
-        <ContactSection />
+        <section id="home">
+          <HomeSection />
+        </section>
+        <section id="projects">
+          <ProjectsSection />
+        </section>
+        <section id="skills">
+          <SkillsSection />
+        </section>
+        <section id="contact">
+          <ContactSection />
+        </section>
         <Footer />
       </div>
     </div>

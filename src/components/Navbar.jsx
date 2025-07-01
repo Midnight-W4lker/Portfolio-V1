@@ -136,21 +136,6 @@ export default function Navbar() {
   </AnimatePresence>
 </nav>
 
-<section id="home">
-  <HomeSection />
-</section>
-
-<section id="projects">
-  <ProjectSection />
-</section>
-
-<section id="skills">
-  <SkillsSection />
-</section>
-
-<section id="contact">
-  <ContactSection />
-</section>
     </>
   );
 }
