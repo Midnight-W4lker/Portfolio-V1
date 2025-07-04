@@ -29,7 +29,7 @@ const ProjectsSection = ({
       title: "Retail Management App",
       description: "A full-stack application for managing retail operations, including inventory management, sales tracking, and customer management.",
       techStack: ["Flask", "SQL-Lite", "Python", "Bootstrap", "JavaScript"],
-      githubUrl: "https://github.com/Midnight-W4lker",
+      githubUrl: "https://github.com/Midnight-W4lker/RMS",
       demoUrl: "https://github.com/Midnight-W4lker",
       imageUrl: null,
       featured: false

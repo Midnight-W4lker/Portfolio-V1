@@ -41,50 +41,48 @@ export default function Navbar() {
   return (
     <>
       <nav className={`navbar ${localScrollY > 30 ? 'navbar-scrolled' : 'navbar-transparent'}`}>
-  <div className="navbar-container">
+  <div className="navbar-container flex items-center justify-between">
+    {/* Logo: acts as menu button on mobile */}
     <motion.img
       src={GithubLogo}
       alt="Logo"
-      className={`navbar-logo ${localScrollY > 40 ? 'navbar-logo-center' : ''}`}
+      className={`navbar-logo ${localScrollY > 40 ? 'navbar-logo-center' : ''} cursor-pointer md:cursor-default`}
       style={{ scale: logoScale, opacity: logoOpacity }}
       onClick={() => {
-        if (hideNav) setIsOpen((prev) => !prev);
+        if (window.innerWidth < 768) setIsOpen((prev) => !prev);
+      }}
+      aria-label="Open navigation menu"
+      role="button"
+      tabIndex={0}
+      onKeyDown={e => {
+        if (window.innerWidth < 768 && (e.key === 'Enter' || e.key === ' ')) setIsOpen(prev => !prev);
       }}
     />
 
-    {!hideNav && (
-      <div className="nav-links hidden md:flex">
-        {navLinks.map((link) => (
-          <Link
-            key={link.to}
-            to={link.to}
-            smooth="easeInOutQuart"
-            duration={250}
-            className="nav-link"
-          >
-            {link.name}
-          </Link>
-        ))}
-      </div>
-    )}
-
-    {!isOpen && !hideNav && (
-      <button
-        className="hamburger-btn md:hidden"
-        onClick={() => setIsOpen(true)}
-      >
-        ☰
-      </button>
-    )}
+    {/* Desktop nav links */}
+    <div className="nav-links hidden md:flex">
+      {navLinks.map((link) => (
+        <Link
+          key={link.to}
+          to={link.to}
+          smooth="easeInOutQuart"
+          duration={250}
+          className="nav-link"
+        >
+          {link.name}
+        </Link>
+      ))}
+    </div>
   </div>
 
+  {/* Mobile Dropdown */}
   <AnimatePresence>
     {isOpen && (
       <motion.div
         initial={{ height: 0, opacity: 0, y: -40 }}
         animate={{ height: 'auto', opacity: 1, y: 0 }}
         exit={{ height: 0, opacity: 0, y: -40 }}
-        className="nav-dropdown fixed left-0 right-0 top-0 mx-auto mt-0 bg-black/80 backdrop-blur-lg rounded-b-2xl shadow-2xl z-50 p-6 flex flex-col items-center"
+        className="nav-dropdown fixed left-0 right-0 top-0 mx-auto mt-0 bg-black/80 backdrop-blur-lg rounded-b-2xl shadow-2xl z-50 p-6 flex flex-col items-center md:hidden"
         style={{
           borderBottom: '2px solid #06b6d4',
           boxShadow: '0 8px 32px 0 rgba(0,255,255,0.12)',
@@ -94,10 +92,10 @@ export default function Navbar() {
           className="flex flex-col items-center cursor-pointer"
           onClick={() => setIsOpen(false)}
         >
-          <img src={GithubLogo} alt="Logo" className="nav-dropdown-logo" />
-          <span className="nav-dropdown-close text-cyan-400 text-2xl mt-2 hover:text-white transition-colors duration-200">✕</span>
+          <img src={GithubLogo} alt="Logo" className="nav-dropdown-logo mb-2" />
+          <span className="nav-dropdown-close text-cyan-400 text-2xl hover:text-white transition-colors duration-200">✕</span>
         </motion.div>
-        <div className="flex flex-row items-center justify-center w-full space-x-6 py-4">
+        <div className="flex flex-col items-center justify-center w-full space-y-4 py-4">
           {navLinks.map((link) => (
             <Link
               key={link.to}
@@ -105,28 +103,14 @@ export default function Navbar() {
               smooth="easeInOutQuart"
               duration={250}
               className="
-                px-6 py-2
-                rounded-xl
-                text-lg font-semibold
-                text-white
-                bg-cyan-900/30
-                hover:bg-cyan-400/20
-                hover:text-cyan-300
-                focus:bg-cyan-400/30 focus:text-cyan-200
-                transition-all duration-200
-                outline-none
-                shadow-md
-                hover:shadow-cyan-400/40
-                active:scale-97
-                cursor-pointer
-                relative
-                group
-                border-none
+                w-40 text-center px-6 py-3 rounded-xl text-lg font-semibold text-white bg-cyan-900/30
+                hover:bg-cyan-400/20 hover:text-cyan-300 focus:bg-cyan-400/30 focus:text-cyan-200
+                transition-all duration-200 outline-none shadow-md hover:shadow-cyan-400/40 active:scale-97
+                cursor-pointer relative group border-none
               "
               onClick={() => setIsOpen(false)}
             >
               <span className="relative z-10">{link.name}</span>
-              {/* Animated underline */}
               <span className="absolute left-4 right-4 bottom-1 h-0.5 bg-gradient-to-r from-cyan-400 to-cyan-600 scale-x-0 group-hover:scale-x-100 group-focus:scale-x-100 transition-transform origin-left duration-300 rounded-full opacity-80"></span>
             </Link>
           ))}
